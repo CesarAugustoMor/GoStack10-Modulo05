@@ -13,6 +13,21 @@ export default class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    const repositories = localStorage.getItem('repositories');
+
+    if (repositories) {
+      this.setState({ repositories: JSON.parse(repositories) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { respositories } = this.state;
+    if (prevState.repositories !== respositories) {
+      localStorage.setItem('repositories', JSON.stringify(respositories));
+    }
+  }
+
   handleInputChange = (e) => {
     this.setState({ newRepo: e.target.value });
   };
